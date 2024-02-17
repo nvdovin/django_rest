@@ -41,8 +41,15 @@ INSTALLED_APPS = [
     "user_app",
     "materials_app",
     "rest_framework",
+    "django_filters"
     
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend'
+    )
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
