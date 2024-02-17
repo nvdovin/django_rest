@@ -1,5 +1,6 @@
 """Импорт классов rest_framework и прочего для корректной работы приложения"""
 from rest_framework import viewsets, generics
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Course, Lesson
 from .serializers import CourseSerializer, LessonSerializer
@@ -12,6 +13,7 @@ class CourseViewSet(viewsets.ModelViewSet):
 
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
+    filter_backends = [DjangoFilterBackend]
 
 
 class LessonCreateAPIView(generics.CreateAPIView):
