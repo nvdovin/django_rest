@@ -32,17 +32,22 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Стандартные джангоаские вещи
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    # Созданные приложения
     "user_app",
     "materials_app",
+
+    # Сторонние фреймворки
     "rest_framework",
-    "django_filters"
-    
+    "django_filters", 
+    "rest_framework_simplejwt"
 ]
 
 REST_FRAMEWORK = {
@@ -51,7 +56,12 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',      
+        # IsAuthenticated - полное закрытие
+        # AllowAny - выборочное
+]
 }
 
 MIDDLEWARE = [

@@ -26,6 +26,7 @@ class User(AbstractUser):
     temporary_password = models.CharField(
         verbose_name="Temporary password", max_length=6, blank=True, null=True
     )
+    is_moderator = models.BooleanField(verbose_name="Модератор?", default=False)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
