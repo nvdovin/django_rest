@@ -13,12 +13,11 @@ class PaymentsAPIListView(generics.ListAPIView):
     """Для того, чтобы показать все данные о пользователе"""
     serializer_class = PaymentSerializer
     queryset = Payments.objects.all()
+    permission_classes = [IsAuthenticated]
 
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     filterset_fields = ("payed_course", "payed_lesson", "payment_type")
     ordering_fields = ("payment_date", )
-
-    permission_classes = [IsAuthenticated]
 
 
 class UserAPIListView(generics.ListAPIView):

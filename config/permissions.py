@@ -11,4 +11,3 @@ class IsModerator(BasePermission):
             return True
 
         return view.is_moderator
-        

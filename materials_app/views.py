@@ -17,7 +17,6 @@ from rest_framework.filters import OrderingFilter
 
 class CourseViewSet(viewsets.ModelViewSet):
     """Вью-сет для модели Курса"""
-
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
     permission_classes = [IsAuthenticated]
@@ -26,7 +25,6 @@ class CourseViewSet(viewsets.ModelViewSet):
 
 class LessonCreateAPIView(generics.CreateAPIView):
     """CRUD механизм - создание записи"""
-
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
     permission_classes = [IsAuthenticated]
@@ -34,7 +32,6 @@ class LessonCreateAPIView(generics.CreateAPIView):
 
 class LessonListAPIView(generics.ListAPIView):
     """CRUD механизм - просмотр записи"""
-
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
     permission_classes = [IsAuthenticated]
@@ -43,7 +40,6 @@ class LessonListAPIView(generics.ListAPIView):
 
 class LessonRetrieveAPIView(generics.RetrieveAPIView):
     """CRUD механизм - просмотр конкретной записи"""
-
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
     permission_classes = [IsModerator]
@@ -52,7 +48,6 @@ class LessonRetrieveAPIView(generics.RetrieveAPIView):
 
 class LessonUpdateAPIView(generics.UpdateAPIView):
     """CRUD механизм - изменение записи"""
-
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
     permission_classes = [IsModerator]
@@ -61,7 +56,6 @@ class LessonUpdateAPIView(generics.UpdateAPIView):
 
 class LessonDestroyAPIView(generics.DestroyAPIView):
     """CRUD механизм - создание записи"""
-
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
     permission_classes = [IsAdminUser]
