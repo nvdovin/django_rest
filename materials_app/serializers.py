@@ -14,6 +14,14 @@ class LessonSerializer(serializers.ModelSerializer):
         model = Lesson
         fields = "__all__"
 
+    def create(self, validated_data):
+        """Автоматическое добавление пользователя в новосоданный экземпляр класса"""
+        print(validated_data)
+        owner = validated_data.email
+        lesson = Lesson(**validated_data)
+        lesson.owner = owner
+        lesson.save()
+
 
 class CourseSerializer(serializers.ModelSerializer):
     """Сериализатор для модели Курсов"""
@@ -28,5 +36,13 @@ class CourseSerializer(serializers.ModelSerializer):
     def get_lessons_count(self, instance):
         """Кастомное поле для вывода счетчика просмотров"""
         return Lesson.objects.filter(course=instance.pk).count()
+    
+    def create(self, validated_data):
+        """Автоматическое добавление пользователя в новосоданный экземпляр класса"""
+        print(validated_data)
+        owner = validated_data.email
+        course = Course(**validated_data)
+        course.owner = owner
+        course.save()
 
 

@@ -3,7 +3,7 @@
 from rest_framework import viewsets, generics
 
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from config.permissions import IsModerator
+from config.permissions import IsModerator, IsOwner
 
 from .models import Course, Lesson
 from .serializers import CourseSerializer, LessonSerializer
@@ -42,7 +42,7 @@ class LessonRetrieveAPIView(generics.RetrieveAPIView):
     """CRUD механизм - просмотр конкретной записи"""
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
-    permission_classes = [IsModerator]
+    permission_classes = [IsModerator, IsOwner]
     filter_backends = [DjangoFilterBackend, OrderingFilter]
 
 
@@ -50,7 +50,7 @@ class LessonUpdateAPIView(generics.UpdateAPIView):
     """CRUD механизм - изменение записи"""
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
-    permission_classes = [IsModerator]
+    permission_classes = [IsModerator, IsOwner]
     filter_backends = [DjangoFilterBackend, OrderingFilter]
 
 
@@ -58,5 +58,5 @@ class LessonDestroyAPIView(generics.DestroyAPIView):
     """CRUD механизм - создание записи"""
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser, IsOwner]
     filter_backends = [DjangoFilterBackend, OrderingFilter]
