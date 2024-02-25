@@ -16,11 +16,12 @@ class LessonSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """Автоматическое добавление пользователя в новосоданный экземпляр класса"""
-        print(validated_data)
-        owner = validated_data.email
+        user = self.context['request'].user
         lesson = Lesson(**validated_data)
-        lesson.owner = owner
+        lesson.owner = user
         lesson.save()
+        return lesson
+
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -39,10 +40,11 @@ class CourseSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         """Автоматическое добавление пользователя в новосоданный экземпляр класса"""
-        print(validated_data)
-        owner = validated_data.email
+        user = self.context['request'].user
+        print(user)
         course = Course(**validated_data)
-        course.owner = owner
+        course.owner = user
         course.save()
+        return course
 
 
