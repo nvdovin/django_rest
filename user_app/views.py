@@ -4,7 +4,7 @@ from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from config.permissions import IsModerator
+from .permissions import IsModerator
 
 from user_app.models import Payments, User
 from user_app.serializers import PaymentSerializer, UserSerializer

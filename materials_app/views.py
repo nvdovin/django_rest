@@ -3,7 +3,8 @@
 from rest_framework import viewsets, generics
 
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from config.permissions import IsModerator, IsOwner
+from .permissions import IsOwner
+from user_app.permissions import IsModerator
 
 from .models import Course, Lesson
 from .serializers import CourseSerializer, LessonSerializer
@@ -14,13 +15,17 @@ from rest_framework.filters import OrderingFilter
 
 # Create your views here.
 
-
 class CourseViewSet(viewsets.ModelViewSet):
     """Вью-сет для модели Курса"""
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, OrderingFilter]
+
+    def get_permissions(self):
+        if self.action == 'create' or self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
+            return [IsAdminUser()]
+        return super().get_permissions()
 
 
 class LessonCreateAPIView(generics.CreateAPIView):
