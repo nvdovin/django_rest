@@ -3,6 +3,8 @@
 from rest_framework import viewsets, generics
 
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
+
+from config import settings
 from .permissions import IsOwner
 from user_app.permissions import IsModerator
 
@@ -31,16 +33,20 @@ class CourseViewSet(viewsets.ModelViewSet):
 class LessonCreateAPIView(generics.CreateAPIView):
     """CRUD механизм - создание записи"""
     serializer_class = LessonSerializer
-    queryset = Lesson.objects.all()
     permission_classes = [IsAuthenticated]
+    queryset = Lesson.objects.all()
 
 
 class LessonListAPIView(generics.ListAPIView):
     """CRUD механизм - просмотр записи"""
     serializer_class = LessonSerializer
-    queryset = Lesson.objects.all()
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, OrderingFilter]
+
+    def get_queryset(self):
+        if self.request.user.groups.filter(name='moderators').exists():
+            return Lesson.objects.all()
+        return Lesson.objects.filter(owner=self.request.user)
 
 
 class LessonRetrieveAPIView(generics.RetrieveAPIView):

@@ -2,6 +2,8 @@
 
 from django.db import models
 
+from config import settings
+
 # Create your models here.
 
 
@@ -11,7 +13,7 @@ class Course(models.Model):
     title = models.CharField(verbose_name="Название курса", max_length=255, unique=True)
     preview = models.ImageField(verbose_name="Превью курса", blank=True, null=True)
     description = models.TextField(verbose_name="Описание курса")
-    owner = models.CharField(verbose_name="Владелец", default=None, blank=True, null=True)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         "Вложенный класс для отображения в админке"
@@ -27,7 +29,7 @@ class Lesson(models.Model):
     preview = models.ImageField(verbose_name="Превью урока", blank=True, null=True)
     video_url = models.URLField(max_length=200, unique=True)
     course = models.ForeignKey(to=Course, on_delete=models.CASCADE)
-    owner = models.CharField(verbose_name="Владелец", default=None, blank=True, null=True)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         """Вложенный класс для описания уроков в адмике"""
