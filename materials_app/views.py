@@ -28,6 +28,12 @@ class CourseViewSet(viewsets.ModelViewSet):
         if self.action == 'create' or self.action == 'update' or self.action == 'partial_update' or self.action == 'destroy':
             return [IsAdminUser()]
         return super().get_permissions()
+    
+    def get_queryset(self):
+        qs = Course.objects.all()
+        if not self.request.user.is_moderator:
+            qs = qs.owner(self.request.user)
+        return qs
 
 
 class LessonCreateAPIView(generics.CreateAPIView):
