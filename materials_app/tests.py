@@ -34,3 +34,27 @@ class CRUDMechanismsTest(APITestCase):
             data=data
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_one_lesson_view(self):
+        """Просмотр одного урока"""
+        self.client.force_authenticate(self.user)
+        response = self.client.get(
+            path="/view_lesson/1/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_destroy_lesson(self):
+        """У этого пользователя не должно получиться удалить урок, который ен его"""
+        self.client.force_authenticate(self.user)
+        response = self.client.post(
+            path="/delete_lesson/1/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_update_lesson(self):
+        """Обновление (редактирование) урока"""
+        self.client.force_authenticate(self.user)
+        response = self.client.post(
+            path="/update_lesson/1/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
