@@ -1,11 +1,12 @@
 """Сериализаторы для удобной работы с DRF, 
 а также импорт моделей, для которых будут созданы сериалхаторы"""
 from rest_framework import serializers
-from .models import Course, Lesson
+
+from materials_app.validators import YoutubeValidator
+from .models import Course, Lesson, CourseSubscribe
 
 
 # Создаю сериализатор для моделей
-
 class LessonSerializer(serializers.ModelSerializer):
     """Сериализатор для модели Курсов"""
 
@@ -13,6 +14,7 @@ class LessonSerializer(serializers.ModelSerializer):
         """Вложенный класс для корректной работы сериализатора"""
         model = Lesson
         fields = "__all__"
+        validators = [YoutubeValidator(field="video_url")]
 
     def create(self, validated_data):
         """Автоматическое добавление пользователя в новосоданный экземпляр класса"""
@@ -21,7 +23,6 @@ class LessonSerializer(serializers.ModelSerializer):
         lesson.owner = user
         lesson.save()
         return lesson
-
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -37,7 +38,7 @@ class CourseSerializer(serializers.ModelSerializer):
     def get_lessons_count(self, instance):
         """Кастомное поле для вывода счетчика просмотров"""
         return Lesson.objects.filter(course=instance.pk).count()
-    
+
     def create(self, validated_data):
         """Автоматическое добавление пользователя в новосоданный экземпляр класса"""
         user = self.context['request'].user
@@ -46,5 +47,3 @@ class CourseSerializer(serializers.ModelSerializer):
         course.owner = user
         course.save()
         return course
-
-
