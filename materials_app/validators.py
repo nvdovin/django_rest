@@ -8,6 +8,7 @@ class YoutubeValidator:
     Описываю свой валидатор для проверки того, не приложил ли полльзователть какую-то ссылку,
     кроме как на ютуб
     """
+
     def __init__(self, field) -> None:
         self.field = field
 

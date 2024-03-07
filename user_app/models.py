@@ -12,7 +12,7 @@ class User(AbstractUser):
     """Собственный класс для модели пользователя"""
 
     username = None
-    email = models.CharField(verbose_name="", unique=True)
+    email = models.CharField(verbose_name="email", unique=True, max_length=100)
     avatar = models.ImageField(
         verbose_name="Аватарка", upload_to="media/users", blank=True, null=True
     )
@@ -37,14 +37,21 @@ class Payments(models.Model):
 
     user = models.CharField(verbose_name="Пользователь", max_length=200)
     payment_date = models.DateField(verbose_name="Дата оплаты")
-    payed_course = models.ForeignKey(to=Course, on_delete=models.CASCADE, null=True, blank=True)
-    payed_lesson = models.ForeignKey(to=Lesson, on_delete=models.CASCADE, null=True, blank=True)
+    payed_course = models.ForeignKey(
+        to=Course, on_delete=models.CASCADE, null=True, blank=True
+    )
+    payed_lesson = models.ForeignKey(
+        to=Lesson, on_delete=models.CASCADE, null=True, blank=True
+    )
     payment_sum = models.FloatField(verbose_name="Сумма платежа")
     payment_type = models.CharField(
-        verbose_name="Тип оплаты", choices=(("CASH", "Наличные"), ("CARD", "Перевод"))
+        verbose_name="Тип оплаты",
+        choices=(("CASH", "Наличные"), ("CARD", "Перевод")),
+        max_length=5,
     )
 
     class Meta:
         """Класс для корректного отображения в админке"""
+
         verbose_name = "Оплата пользователя"
         verbose_name_plural = "Оплаты пользователя"

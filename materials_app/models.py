@@ -47,7 +47,11 @@ class CourseSubscribe(models.Model):
     Модель, призвана к реазиции подписки или отписки на курс"""
 
     course = models.ForeignKey(
-        to="Course", on_delete=models.SET_NULL, blank=True, null=True, verbose_name="Курс"
+        to="Course",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        verbose_name="Курс",
     )
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,
