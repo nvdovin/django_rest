@@ -1,7 +1,6 @@
 from rest_framework.test import APITestCase
 from rest_framework import status
 from user_app.models import User
-from rest_framework.test import force_authenticate
 
 # Create your tests here.
 
