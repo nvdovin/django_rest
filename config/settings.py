@@ -47,7 +47,10 @@ INSTALLED_APPS = [
     # Сторонние фреймворки
     "rest_framework",
     "django_filters", 
-    "rest_framework_simplejwt"
+    "rest_framework_simplejwt",
+
+    # Блок с документацией
+    'drf_yasg',
 ]
 
 REST_FRAMEWORK = {
@@ -61,7 +64,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',      
         # IsAuthenticated - полное закрытие
         # AllowAny - выборочное
-]
+],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 }
 
 MIDDLEWARE = [
