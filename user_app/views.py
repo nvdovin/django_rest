@@ -10,6 +10,9 @@ from .permissions import IsModerator
 from user_app.models import Payments, User
 from user_app.serializers import PaymentSerializer, UserSerializer
 
+from .services_payment import StripePayment
+import config.settings as settings
+
 
 class PaymentsAPIListView(generics.ListAPIView):
     """Для того, чтобы показать все данные о пользователе"""
@@ -21,6 +24,23 @@ class PaymentsAPIListView(generics.ListAPIView):
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     filterset_fields = ("payed_course", "payed_lesson", "payment_type")
     ordering_fields = ("payment_date",)
+
+
+class PaymentMakeAPICreateView(generics.CreateAPIView):
+    """Класс что была возможность совершать платежи"""
+    serializer_class = PaymentSerializer
+    queryset = Payments.objects.all()
+    permission_classes = [IsAuthenticated]
+
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
+    filterset_fields = ("payed_course", "payed_lesson", "payment_type")
+    ordering_fields = ("payment_date",)
+
+    payment_class = StripePayment()
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+        self.payment_class.pay(current_user=self.request.user.email)
 
 
 class UserAPIListView(generics.ListAPIView):
