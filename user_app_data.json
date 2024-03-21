@@ -1,0 +1,24 @@
+[
+    {
+        "model": "user_app.user",
+        "pk": 1,
+        "fields": {
+            "password": "1234",
+            "last_login": null,
+            "is_superuser": false,
+            "first_name": "",
+            "last_name": "",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2024-02-17T13:40:04.711Z",
+            "email": "vdovinna@yandex.ru",
+            "avatar": "",
+            "birthday": null,
+            "phone_number": null,
+            "city": null,
+            "temporary_password": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]

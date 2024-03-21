@@ -34,7 +34,6 @@ class CourseSerializer(serializers.ModelSerializer):
 
     lessons_count = serializers.SerializerMethodField()
     lessons_in_course = LessonSerializer(many=True, read_only=True, source="lesson_set")
-    payment_url = serializers.SerializerMethodField()
 
     class Meta:
         """Вложенный класс для корректной работы сериализатора"""
@@ -46,27 +45,6 @@ class CourseSerializer(serializers.ModelSerializer):
         """Кастомное поле для вывода счетчика просмотров"""
         return Lesson.objects.filter(course=instance.pk).count()
     
-    def get_payment_url(self, obj):
-        """Метод для создания сессии покупки, как учили нас наши наставники"""
-        stripe.api_key = settings.STRIPE_SECRET_KEY  # Указываем секретный ключ Stripe
-
-        session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            line_items=[{
-                'price_data': {
-                    'currency': 'rub',
-                    'product_data': {
-                        'name': obj.title,
-                    },
-                    'unit_amount': 30000,  # Цена в копейках
-                },
-                'quantity': 1,
-            }],
-            mode='payment',
-            success_url=f'http://localhost:8000/view_lesson/{obj.id}/',  # URL после успешной оплаты
-            cancel_url='https://example.com/view_lessons/',    # URL в случае отмены оплаты
-        )
-        return session.url
 
     def create(self, validated_data):
         """Автоматическое добавление пользователя в новосоданный экземпляр класса"""

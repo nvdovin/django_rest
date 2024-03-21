@@ -2,17 +2,7 @@
 
 from rest_framework import serializers
 
-from user_app.models import Payments, User
-
-
-class PaymentSerializer(serializers.ModelSerializer):
-    """Сериализатор для приложения user_app, для модели Платежей"""
-
-    class Meta:
-        """Вложенный класс для настройки вышестоящего класса"""
-
-        model = Payments
-        fields = "__all__"
+from user_app.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):

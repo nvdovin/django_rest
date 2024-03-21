@@ -40,5 +40,6 @@ urlpatterns = [
     
     path('admin/', admin.site.urls),
     path('user/', include(('user_app.urls', 'user_app'), namespace='user_app')),
+    path('payment/', include(('payment_app.urls', 'payment_app'), namespace='payment_app')),
     path('', include(('materials_app.urls', 'materials_app'), namespace='materials_app'))
 ]

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # Созданные приложения
     "user_app",
     "materials_app",
+    "payment_app",
 
     # Сторонние фреймворки
     "rest_framework",
