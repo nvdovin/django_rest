@@ -19,9 +19,14 @@ class PaymentAPIView(APIView):
             
             product_id = payment_class.create_product(name="Оплата курса", description="Оплата курса")
             price_id = payment_class.create_price(amount=10000, product_id=product_id, currency="rub")
-            payment_url = payment_class.create_session(price_id=price_id)
+            payment_url, session_id = payment_class.create_session(price_id=price_id)
             
-            new_payment = Payments.objects.create(user=self.request.user, payment_url=payment_url)
+            new_payment = Payments.objects.create(
+                user=self.request.user, 
+                payment_url=payment_url,
+                payed_course=course_item,
+                session_id=session_id
+                )
             new_payment.save()
             return Response({"message": "Ссылка для оплаты", "url": payment_url})
         else:

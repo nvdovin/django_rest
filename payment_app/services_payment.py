@@ -74,7 +74,7 @@ class StripePayment:
             cancel_url='http://localhost:8000/'
         )
         print(session)
-        return session["url"]
+        return session["url"], session["id"]
     
     def pay(self, session_id: str):
         """Метод для обработки платежа с использованием предоставленного идентификатора сессии.

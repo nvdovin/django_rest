@@ -24,6 +24,7 @@ class Payments(models.Model):
         default="CASH"
     )
     payment_url = models.TextField(blank=True, null=True, verbose_name="URL оплаты")
+    session_id = models.CharField(max_length=255, verbose_name="ID сессии", blank=True, null=True)
 
     class Meta:
         """Класс для корректного отображения в админке"""
