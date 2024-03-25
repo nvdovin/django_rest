@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,6 +52,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "django_filters", 
     "rest_framework_simplejwt",
+    "django_celery_beat",
 
     # Блок с документацией
     'drf_yasg',
@@ -163,3 +167,29 @@ LOGOUT_REDIRECT_URL = "/"
 
 AUTH_USER_MODEL = "user_app.User"
 STRIPE_SECRET_KEY = "sk_test_51OusigBmOnO8BJxu9KNMQzQucCkWv9lPTdsSIDSMymavPsfTkZP61hLWJ1ziTN8Jj4gyahB5R6X4iVFE4yJAmbTF00145tGscq"
+
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_TIMEZONE = "Europe/Moscow"
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'vdovinna@yandex.ru'
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
+}
+
+SIMPLE_JWT = {
+    'UPDATE_LAST_LOGIN': True
+}
