@@ -25,6 +25,7 @@ class User(AbstractUser):
         verbose_name="Temporary password", max_length=6, blank=True, null=True
     )
     is_moderator = models.BooleanField(verbose_name="Модератор?", default=False)
+    last_login = models.DateTimeField(verbose_name="Последнее посещение сервиса", auto_now=True, blank=True, null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

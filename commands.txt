@@ -1,0 +1,4 @@
+celery -A config worker --loglevel=info - Запуск воркера
+celery -A config beat --loglevel=info - Для периодических задач
+
+celery -A config beat -l info -s django - одновременный запуск

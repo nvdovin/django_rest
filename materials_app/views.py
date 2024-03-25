@@ -27,7 +27,7 @@ class CourseViewSet(viewsets.ModelViewSet):
 
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
-    permission_classes = [IsAdminUser]
+    permission_classes = [] # IsAdminUser
     filter_backends = [DjangoFilterBackend, OrderingFilter]
 
     def get_permissions(self):
@@ -37,7 +37,7 @@ class CourseViewSet(viewsets.ModelViewSet):
             or self.action == "partial_update"
             or self.action == "destroy"
         ):
-            return [IsAdminUser]
+            return [] # IsAdminUser
         return super().get_permissions()
 
     def get_queryset(self):
