@@ -1,6 +1,6 @@
 import os
 
-from celery import Celery
+from celery import Celery, shared_task
 
 # Set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
@@ -23,7 +23,7 @@ def debug_task(self):
     print(f'Request: {self.request!r}')
 
 
-@app.task(bind=True, ignore_result=True)
+@shared_task
 def check_last_login_date():
     """
     Check the last login date of all users and set the is_active flag to False if the last login date is older than 30 days.

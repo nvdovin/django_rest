@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+from datetime import timedelta
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -192,4 +193,11 @@ CACHES = {
 
 SIMPLE_JWT = {
     'UPDATE_LAST_LOGIN': True
+}
+
+CELERY_BEAT_SCHEDULE = {
+    'task_name': {
+        'task': 'user_app.tasks.check_last_login_date',
+        'schedule': timedelta(seconds=30),
+    },
 }
